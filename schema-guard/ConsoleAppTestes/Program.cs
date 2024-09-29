@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using schema_guard;
 
 namespace SeuProjeto
 {
@@ -18,8 +19,13 @@ namespace SeuProjeto
 
             // Criar o ServiceCollection e adicionar as configurações
             var services = new ServiceCollection();
-            services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
-            services.AddTransient<MeuServico>(provider => new MeuServico(services.BuildServiceProvider()));
+
+            //Criar o mapeamento da secao "AppSettings" do appsettins para class da nossa lib "AppSettingsSchemaGuard". 
+            //Dessa forma, posteriormente internamente em nossa class "MeuServico" da lib, sera possível regatar mapemaento
+            //atraves de 'IOptionsSnapshot'
+            services.Configure<AppSettingsSchemaGuard>(configuration.GetSection("AppSettings"));
+
+            services.AddTransient<MeuServico>();
 
             // Construir o ServiceProvider
             var serviceProvider = services.BuildServiceProvider();

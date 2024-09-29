@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using schema_guard;
 using System;
 
 namespace SeuProjeto
@@ -8,13 +9,20 @@ namespace SeuProjeto
     public class MeuServico
     {
 
-        private readonly AppSettings _appsetings;
+        private readonly AppSettingsSchemaGuard _appsetings;
         private readonly IServiceProvider _serviceProvider;
 
-        public MeuServico(IServiceProvider serviceProvider)
+        //public MeuServico(IServiceProvider serviceProvider)
+        //{
+
+        //    _serviceProvider = serviceProvider;
+        //    //_appsetings = appSettings.Value; // Obtém a instância atual das opções
+        //}
+
+        public MeuServico(IOptionsSnapshot<AppSettingsSchemaGuard> optionsSnapshot)
         {
 
-            _serviceProvider = serviceProvider;
+            _appsetings = optionsSnapshot.Value;
             //_appsetings = appSettings.Value; // Obtém a instância atual das opções
         }
 
@@ -23,9 +31,9 @@ namespace SeuProjeto
         public string Executar()
         {
             // 3. Resolver a instância
-            var myService = _serviceProvider.GetService<IOptionsSnapshot<AppSettings>>();
+            //var myService = _serviceProvider.GetService<IOptionsSnapshot<AppSettingsSchemaGuard>>();
 
-            return myService.Value.Title;
+            return _appsetings.Title;
         }
     }
 }
