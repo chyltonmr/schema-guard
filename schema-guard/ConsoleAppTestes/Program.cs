@@ -32,7 +32,7 @@ namespace SeuProjeto
 
             // Resolve e executa o serviço
             var meuServico = serviceProvider.GetService<MeuServico>();
-            var result = meuServico.Executar();
+            var result = meuServico.Executar().Result;
 
             // Aguarde uma tecla para fechar
             Console.ReadKey();
