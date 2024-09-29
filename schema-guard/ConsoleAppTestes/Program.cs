@@ -9,20 +9,24 @@ namespace SeuProjeto
     {
         static void Main(string[] args)
         {
-            // Criação do Host
-            var host = Host.CreateDefaultBuilder(args)
-                .ConfigureServices((context, services) =>
-                {
-                    // Configurar as opções
-                    services.Configure<AppSettings>(context.Configuration.GetSection("AppSettings"));
-                    // Registrar a classe que usará IOptionsSnapshot
-                    services.AddTransient<MeuServico>();
-                })
-                .Build();
+            // Configurar o builder para carregar appsettings.json
+            var configurationBuilder = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            var configuration = configurationBuilder.Build();
+
+            // Criar o ServiceCollection e adicionar as configurações
+            var services = new ServiceCollection();
+            services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
+            services.AddTransient<MeuServico>(provider => new MeuServico(services.BuildServiceProvider()));
+
+            // Construir o ServiceProvider
+            var serviceProvider = services.BuildServiceProvider();
 
             // Resolve e executa o serviço
-            var meuServico = host.Services.GetRequiredService<MeuServico>();
-           var result = meuServico.Executar();
+            var meuServico = serviceProvider.GetService<MeuServico>();
+            var result = meuServico.Executar();
 
             // Aguarde uma tecla para fechar
             Console.ReadKey();
