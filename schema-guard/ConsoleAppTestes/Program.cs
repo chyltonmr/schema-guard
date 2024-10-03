@@ -26,6 +26,7 @@ namespace SeuProjeto
             services.Configure<AppSettingsSchemaGuard>(configuration.GetSection("AppSettings"));
 
             services.AddTransient<MeuServico>();
+            services.AddTransient<SchemaValidator>();
 
             // Construir o ServiceProvider
             var serviceProvider = services.BuildServiceProvider();
