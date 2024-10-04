@@ -26,13 +26,14 @@ namespace SeuProjeto
             services.Configure<AppSettingsSchemaGuard>(configuration.GetSection("AppSettings"));
 
             services.AddTransient<MeuServico>();
+            services.AddTransient<SchemaValidator>();
 
             // Construir o ServiceProvider
             var serviceProvider = services.BuildServiceProvider();
 
             // Resolve e executa o serviço
             var meuServico = serviceProvider.GetService<MeuServico>();
-            var result = meuServico.Executar();
+            var result = meuServico.Executar().Result;
 
             // Aguarde uma tecla para fechar
             Console.ReadKey();
