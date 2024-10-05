@@ -7,22 +7,24 @@ using System.Threading.Tasks;
 
 namespace SeuProjeto
 {
-    public class MeuServico
+    public class SchemaGuard : ISchemaGuard
     {
 
         private readonly AppSettingsSchemaGuard _appsetings;
         private readonly IServiceProvider _serviceProvider;
-        private readonly SchemaValidator _schemaValidator;
+        private readonly IConectorLambda _conectorLambda;
+        private readonly ISchemaAvro _schemaAvro;
 
-        public MeuServico(IOptionsSnapshot<AppSettingsSchemaGuard> optionsSnapshot, SchemaValidator schemaValidator)
+        public SchemaGuard(IOptionsSnapshot<AppSettingsSchemaGuard> optionsSnapshot, IConectorLambda conectorLambda, ISchemaAvro schemaAvro)
         {
             this._appsetings = optionsSnapshot.Value;
-            this._schemaValidator = schemaValidator;
+            this._conectorLambda = conectorLambda;
+            this._schemaAvro = schemaAvro;
         }
 
 
 
-        public async Task<string> Executar()
+        public async Task<string> Validar(string jsonValidar, Type estruturaOficial)
         {
             string jsonRecebido = @"
 {
@@ -65,8 +67,12 @@ namespace SeuProjeto
   ]
 }";
 
+            jsonValidar = jsonRecebido;
+
+            estruturaOficial = typeof(Root);
+
             // Validar o JSON com base na classe Root
-            bool resultadoValidacao = _schemaValidator.ValidarEstruturaJsonUsandoClasse(jsonRecebido, typeof(Root));
+            bool resultadoValidacao = _conectorLambda.Validar(jsonRecebido, estruturaOficial);
 
             if (resultadoValidacao)
             {

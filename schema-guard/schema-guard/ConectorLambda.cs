@@ -11,12 +11,13 @@ using System.Reflection;
 using System.Text.Json;
 using Newtonsoft.Json;
 using System.Net.NetworkInformation;
+using schema_guard;
 
 
-public class SchemaValidator
+public class ConectorLambda : IConectorLambda
 {
 
-    public bool ValidarEstruturaJsonUsandoClasse(string json, Type tipoEsperado)
+    public bool Validar(string json, Type tipoEsperado)
     {
         try
         {

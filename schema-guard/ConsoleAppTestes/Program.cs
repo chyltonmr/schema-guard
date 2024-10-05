@@ -25,15 +25,16 @@ namespace SeuProjeto
             //atraves de 'IOptionsSnapshot'
             services.Configure<AppSettingsSchemaGuard>(configuration.GetSection("AppSettings"));
 
-            services.AddTransient<MeuServico>();
-            services.AddTransient<SchemaValidator>();
+            services.AddTransient<ISchemaGuard, SchemaGuard>();
+            services.AddTransient<ISchemaAvro, SchemaAvro>();
+            services.AddTransient<IConectorLambda, ConectorLambda>();
 
             // Construir o ServiceProvider
             var serviceProvider = services.BuildServiceProvider();
 
             // Resolve e executa o serviço
-            var meuServico = serviceProvider.GetService<MeuServico>();
-            var result = meuServico.Executar().Result;
+            var schemaGuard = serviceProvider.GetService<ISchemaGuard>();
+            var result = schemaGuard.Validar("", typeof(Root)).Result;
 
             // Aguarde uma tecla para fechar
             Console.ReadKey();
