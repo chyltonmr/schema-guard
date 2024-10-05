@@ -12,13 +12,72 @@ using System.Text.Json;
 using Newtonsoft.Json;
 using System.Net.NetworkInformation;
 using schema_guard;
+using Microsoft.Extensions.Options;
+using System.Threading.Tasks;
 
 
 public class ConectorLambda : IConectorLambda
 {
 
-    public bool Validar(string json, Type tipoEsperado)
+    private readonly AppSettings _appSettings;
+    private readonly string _jsonRecebido;
+
+    public ConectorLambda(IOptionsSnapshot<AppSettings> optionsSnapshot)
     {
+        _appSettings = optionsSnapshot.Value;
+
+        #region Mock _appSettings
+
+        _jsonRecebido = @"
+{
+  'date': '2024-01-01',
+  'guid': '35ggrggg444',
+  'level': 'Verbose',
+  'message': [
+    {
+      'payload': {
+        'key': 'd444ggg5g5',
+        'value': {
+          'data': {
+            'texto_status_execucao': 'VALIDADA',
+            'data_hora_evento': '2024-01-01 14:11 15:11',
+            'descricao_status_operacao': 'VALIDADA',
+            'descricao_contrato_operacao': 'ff4444-4f4444-45gfgfg4-333',
+            'codigo_identificador_boleto': '3444444f4-rgrgrgr-44g444'
+          }
+        },
+        'topic': 'tesouraria-coreografada-credito',
+        'partition': 2,
+        'offset': 33333,
+        'timestamp': 344444,
+        'headers': [
+          {
+            'key': 'type',
+            'value': ''
+          },
+          {
+            'key': 'source',
+            'value': 'IC8'
+          },
+          {
+            'key': 'id',
+            'value': 'IC8-4566grf4g5g5g5g-gg55555'
+          }
+        ]
+      }
+    }
+  ]
+}";
+
+        #endregion
+    }
+
+    public async Task<bool> Validar(string json, Type tipoEsperado)
+    {
+        //TODO: RETIRAR MOCK POSTERIORMENTE
+        json = _jsonRecebido;
+        tipoEsperado = typeof(Root);
+
         try
         {
             int totalPropriedadesRoot = tipoEsperado.GetProperties().Count();
@@ -30,8 +89,17 @@ public class ConectorLambda : IConectorLambda
             var resp = ValidarCamposRecursivamente(jsonObj, tipoEsperado, jsonObj, ref totalPropriedadesRoot);
 
             if (totalPropriedadesRoot == default(int) && resp.Any())
+            {
+
+                Console.WriteLine("JSON válido.");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("JSON inválido.");
                 return false;
-            else return true;
+            }
+
         }
         catch (Exception ex)
         {
