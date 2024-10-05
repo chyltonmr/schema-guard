@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace schema_guard
+namespace schema_guard.Config
 {
     public class AppSettings
     {

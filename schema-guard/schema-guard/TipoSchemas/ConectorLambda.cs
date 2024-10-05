@@ -14,6 +14,8 @@ using System.Net.NetworkInformation;
 using schema_guard;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
+using schema_guard.TipoSchemas;
+using schema_guard.Config;
 
 
 public class ConectorLambda : IConectorLambda
@@ -76,7 +78,7 @@ public class ConectorLambda : IConectorLambda
     {
         //TODO: RETIRAR MOCK POSTERIORMENTE
         json = _jsonRecebido;
-        tipoEsperado = typeof(Root);
+        //tipoEsperado = tipoEsperado;
 
         try
         {

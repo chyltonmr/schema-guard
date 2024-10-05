@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using schema_guard;
+using schema_guard.Config;
+using schema_guard.TipoSchemas;
 
 namespace SeuProjeto
 {
