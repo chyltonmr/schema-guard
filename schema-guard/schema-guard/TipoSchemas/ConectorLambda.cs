@@ -21,10 +21,10 @@ using schema_guard.Config;
 public class ConectorLambda : IConectorLambda
 {
 
-    private readonly AppSettings _appSettings;
+    private readonly GuardSettings _appSettings;
     private readonly string _jsonRecebido;
 
-    public ConectorLambda(IOptionsSnapshot<AppSettings> optionsSnapshot)
+    public ConectorLambda(IOptionsSnapshot<GuardSettings> optionsSnapshot)
     {
         _appSettings = optionsSnapshot.Value;
 

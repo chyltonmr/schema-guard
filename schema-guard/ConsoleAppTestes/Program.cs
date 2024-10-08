@@ -25,7 +25,7 @@ namespace SeuProjeto
             //Criar o mapeamento da secao "AppSettings" do appsettins para class da nossa lib "AppSettingsSchemaGuard". 
             //Dessa forma, posteriormente internamente em nossa class "MeuServico" da lib, sera possível regatar mapemaento
             //atraves de 'IOptionsSnapshot'
-            services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
+            services.Configure<GuardSettings>(configuration.GetSection("AppSettings"));
 
             services.AddTransient<ISchemaAvro, SchemaAvro>();
             services.AddTransient<IConectorLambda, ConectorLambda>();
@@ -37,7 +37,7 @@ namespace SeuProjeto
             var conectorLambda = serviceProvider.GetService<IConectorLambda>();
             var result = conectorLambda.Validar("", typeof(Root)).Result;
 
-            // Aguarde uma tecla para fechar
+            // Aguarde uma tecla para fechar 
             Console.ReadKey();
         }
     }

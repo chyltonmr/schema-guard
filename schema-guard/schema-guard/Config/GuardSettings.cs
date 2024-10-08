@@ -4,7 +4,7 @@ using System.Text;
 
 namespace schema_guard.Config
 {
-    public class AppSettings
+    public class GuardSettings
     {
         public string Title { get; set; }
         public string Version { get; set; }
