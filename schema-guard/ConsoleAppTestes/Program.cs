@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using schema_guard;
+using schema_guard.Config;
+using schema_guard.TipoSchemas;
 
 namespace SeuProjeto
 {
@@ -23,19 +25,19 @@ namespace SeuProjeto
             //Criar o mapeamento da secao "AppSettings" do appsettins para class da nossa lib "AppSettingsSchemaGuard". 
             //Dessa forma, posteriormente internamente em nossa class "MeuServico" da lib, sera possível regatar mapemaento
             //atraves de 'IOptionsSnapshot'
-            services.Configure<AppSettingsSchemaGuard>(configuration.GetSection("AppSettings"));
+            services.Configure<GuardSettings>(configuration.GetSection("AppSettings"));
 
-            services.AddTransient<MeuServico>();
-            services.AddTransient<SchemaValidator>();
+            services.AddTransient<ISchemaAvro, SchemaAvro>();
+            services.AddTransient<IConectorLambda, ConectorLambda>();
 
             // Construir o ServiceProvider
             var serviceProvider = services.BuildServiceProvider();
 
             // Resolve e executa o serviço
-            var meuServico = serviceProvider.GetService<MeuServico>();
-            var result = meuServico.Executar().Result;
+            var conectorLambda = serviceProvider.GetService<IConectorLambda>();
+            var result = conectorLambda.Validar("", typeof(Root)).Result;
 
-            // Aguarde uma tecla para fechar
+            // Aguarde uma tecla para fechar 
             Console.ReadKey();
         }
     }
