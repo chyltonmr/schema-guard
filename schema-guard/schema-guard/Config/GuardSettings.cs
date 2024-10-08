@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace schema_guard
+namespace schema_guard.Config
 {
-    public class AppSettingsSchemaGuard
+    public class GuardSettings
     {
         public string Title { get; set; }
         public string Version { get; set; }
