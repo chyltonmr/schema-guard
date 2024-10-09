@@ -13,7 +13,7 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageProjectUrl></PackageProjectUrl>
     <Product>SchemaGuard</Product>
-    <Version>1.0.7</Version>
+    <Version>1.0.8</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/chyltonmr/schema-guard</RepositoryUrl>
   </PropertyGroup>
@@ -28,7 +28,7 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-    <None Include="README.md" Pack="true" PackagePath="\"/>
+    <None Include="../../README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
 </Project>
