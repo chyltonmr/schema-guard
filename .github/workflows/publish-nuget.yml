@@ -20,6 +20,9 @@ jobs:
       with:
         dotnet-version: '5.0.x'  # Versão compatível com netstandard2.1
 
+    - name: List files in current directory
+      run: ls -R
+
     - name: Restore dependencies
       run: dotnet restore schema-guard/schema-guard/schema-guard/schema-guard.csproj
 
