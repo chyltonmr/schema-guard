@@ -58,30 +58,30 @@ public class SchemaValidator
     }
 
     // Função recursiva para percorrer o schema
-    private static void TraverseSchema(Schema schema, GenericRecord dadosFakes, int indentLevel = 0)
+    private static void TraverseSchema(Schema schemaEsperado, GenericRecord dadosFakes, int indentLevel = 0)
     {
         string indent = new string(' ', indentLevel * 2);  // Controle da indentação para melhor visualização
 
 
-        if (schema is RecordSchema recordSchema)
+        if (schemaEsperado is RecordSchema recordSchemaEsperado)
         {
-            Console.WriteLine($"{indent}Objeto (Record): {recordSchema.Fullname}");
-            foreach (var field in recordSchema.Fields)
+            Console.WriteLine($"{indent}Objeto (Record): {recordSchemaEsperado.Fullname}");
+            foreach (var fieldEsperados in recordSchemaEsperado.Fields)
             {
-                Console.WriteLine($"{indent}  Campo: {field.Name}");
+                Console.WriteLine($"{indent}  Campo: {fieldEsperados.Name}");
 
                 // Verificar se o campo existe no GenericRecord 
-                if (dadosFakes.TryGetValue(field.Name, out var fieldValue))
+                if (dadosFakes.TryGetValue(fieldEsperados.Name, out var fieldValue))
                 {
                     Console.WriteLine($"{indent}    Valor encontrado: {fieldValue}");
 
                     // Verificar se o campo é um objeto e percorrer recursivamente
-                    if (field.Schema is RecordSchema)
+                    if (fieldEsperados.Schema is RecordSchema)
                     {
-                        TraverseSchema(field.Schema, (GenericRecord)fieldValue, indentLevel + 2);
+                        TraverseSchema(fieldEsperados.Schema, (GenericRecord)fieldValue, indentLevel + 2);
                     }
                     // Verificar se o campo é uma lista e validar seus itens
-                    else if (field.Schema is ArraySchema arraySchema)
+                    else if (fieldEsperados.Schema is ArraySchema arraySchema)
                     {
                         var items = fieldValue as IEnumerable<object>;
                         Console.WriteLine($"{indent}    Lista encontrada com {items?.ToString() ?? "0"} itens");
@@ -98,15 +98,15 @@ public class SchemaValidator
                 }
             }
         }
-        else if (schema is PrimitiveSchema primitiveSchema)
+        else if (schemaEsperado is PrimitiveSchema primitiveSchema)
         {
             Console.WriteLine($"{indent}Tipo Primitivo: {primitiveSchema.Fullname}");
         }
-        else if (schema is ArraySchema arraySchema)
+        else if (schemaEsperado is ArraySchema arraySchema)
         {
             Console.WriteLine($"{indent}Lista (Array): Tipo dos itens: {arraySchema.ItemSchema.Fullname}");
         }
-        else if (schema is UnionSchema unionSchema)
+        else if (schemaEsperado is UnionSchema unionSchema)
         {
             Console.WriteLine($"{indent}Union (UnionSchema):");
             foreach (var subSchema in unionSchema.Schemas)
