@@ -53,7 +53,7 @@ public class SchemaValidator
             }
 
             // Percorrer os campos do schema
-            TraverseSchema(dadosFakes.Schema);
+            TraverseSchema(esperado.Schema);
         }
     }
 
