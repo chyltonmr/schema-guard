@@ -7,6 +7,6 @@ namespace schema_guard.TipoSchemas
 {
     public interface IConectorLambda : IBaseGuard
     {
-        public Task<bool> Validar(string json, Type tipoEsperado);
+
     }
 }

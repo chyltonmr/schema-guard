@@ -21,14 +21,14 @@ using Microsoft.Extensions.Primitives;
 public class ConectorLambda : IConectorLambda
 {
 
-    private readonly GuardSettings _appSettings;
+    private readonly GuardSettings _guardSettings;
     private readonly string _jsonRecebido;
     private Dictionary<string, string> _camposNaoExistem = new Dictionary<string, string>();
     private string _nivel = string.Empty;
 
     public ConectorLambda(IOptionsSnapshot<GuardSettings> optionsSnapshot)
     {
-        _appSettings = optionsSnapshot.Value;
+        _guardSettings = optionsSnapshot.Value;
 
         #region Mock _appSettings
 
