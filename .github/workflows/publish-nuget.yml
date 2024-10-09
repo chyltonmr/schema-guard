@@ -24,7 +24,7 @@ jobs:
       run: ls -R
 
     - name: Restore dependencies
-      run: dotnet restore schema-guard/schema-guard/schema-guard/schema-guard.csproj
+      run: dotnet restore schema-guard/schema-guard/schema-guard.csproj
 
     - name: Build the project
       run: dotnet build schema-guard/schema-guard/schema-guard/schema-guard.csproj --configuration Release --no-restore
