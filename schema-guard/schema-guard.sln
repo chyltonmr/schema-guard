@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "schema-guard", "schema-guard\schema-guard.csproj", "{B9C30C96-CC51-490D-8A19-2B0065051ED0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppTestes", "ConsoleAppTestes\ConsoleAppTestes.csproj", "{C9E01DFC-6138-40C7-A507-02724DE4A7CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "schema-guard", "schema-guard\schema-guard.csproj", "{B9C30C96-CC51-490D-8A19-2B0065051ED0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		{B9C30C96-CC51-490D-8A19-2B0065051ED0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9C30C96-CC51-490D-8A19-2B0065051ED0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9C30C96-CC51-490D-8A19-2B0065051ED0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C9E01DFC-6138-40C7-A507-02724DE4A7CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C9E01DFC-6138-40C7-A507-02724DE4A7CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C9E01DFC-6138-40C7-A507-02724DE4A7CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C9E01DFC-6138-40C7-A507-02724DE4A7CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
