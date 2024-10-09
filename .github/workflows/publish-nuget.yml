@@ -24,7 +24,7 @@ jobs:
       run: dotnet restore
 
     - name: Build the project
-      run: dotnet build schema-guard --configuration Release --no-restore
+      run: dotnet build schema-guard/schema-guard --configuration Release --no-restore
 
     - name: Pack the project
       run: dotnet pack --configuration Release --no-build --output ./nupkg
