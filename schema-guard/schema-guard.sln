@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "schema-guard", "schema-guard\schema-guard.csproj", "{B9C30C96-CC51-490D-8A19-2B0065051ED0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppTestes", "ConsoleAppTestes\ConsoleAppTestes.csproj", "{7CF51D77-099A-4FF4-A12A-12BE9D211C29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{B9C30C96-CC51-490D-8A19-2B0065051ED0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9C30C96-CC51-490D-8A19-2B0065051ED0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9C30C96-CC51-490D-8A19-2B0065051ED0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CF51D77-099A-4FF4-A12A-12BE9D211C29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CF51D77-099A-4FF4-A12A-12BE9D211C29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CF51D77-099A-4FF4-A12A-12BE9D211C29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CF51D77-099A-4FF4-A12A-12BE9D211C29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
