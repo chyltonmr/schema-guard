@@ -53,50 +53,70 @@ public class SchemaValidator
             }
 
             // Percorrer os campos do schema
-            TraverseSchema(esperado.Schema);
+            TraverseSchema(esperado.Schema, dadosFakes);
         }
     }
 
     // Função recursiva para percorrer o schema
-    private static void TraverseSchema(Schema schema, int indentLevel = 0)
+    private static void TraverseSchema(Schema schema, GenericRecord dadosFakes, int indentLevel = 0)
     {
         string indent = new string(' ', indentLevel * 2);  // Controle da indentação para melhor visualização
 
-        // Verificar o tipo do schema
+
         if (schema is RecordSchema recordSchema)
         {
             Console.WriteLine($"{indent}Objeto (Record): {recordSchema.Fullname}");
             foreach (var field in recordSchema.Fields)
             {
                 Console.WriteLine($"{indent}  Campo: {field.Name}");
-                TraverseSchema(field.Schema, indentLevel + 2);  // Percorre os campos do objeto (recursivo)
-            }
-        }
-        else if (schema is ArraySchema arraySchema)
-        {
-            Console.WriteLine($"{indent}Lista (Array):");
-            Console.WriteLine($"{indent}  Tipo dos itens:");
-            TraverseSchema(arraySchema.ItemSchema, indentLevel + 2);  // Percorre os itens do array
-        }
-        else if (schema is UnionSchema unionSchema)
-        {
-            Console.WriteLine($"{indent}Union (UnionSchema):");
-            foreach (var subSchema in unionSchema.Schemas)
-            {
-                Console.WriteLine($"{indent}  Subtipo:");
-                TraverseSchema(subSchema, indentLevel + 2);  // Percorre cada subtipo da união
+
+                // Verificar se o campo existe no GenericRecord 
+                if (dadosFakes.TryGetValue(field.Name, out var fieldValue))
+                {
+                    Console.WriteLine($"{indent}    Valor encontrado: {fieldValue}");
+
+                    // Verificar se o campo é um objeto e percorrer recursivamente
+                    if (field.Schema is RecordSchema)
+                    {
+                        TraverseSchema(field.Schema, (GenericRecord)fieldValue, indentLevel + 2);
+                    }
+                    // Verificar se o campo é uma lista e validar seus itens
+                    else if (field.Schema is ArraySchema arraySchema)
+                    {
+                        var items = fieldValue as IEnumerable<object>;
+                        Console.WriteLine($"{indent}    Lista encontrada com {items?.ToString() ?? "0"} itens");
+                        foreach (var item in items)
+                        {
+                            // Validar o tipo dos itens da lista
+                            Console.WriteLine($"{indent}    Item: {item}");
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"{indent}    Campo não encontrado no GenericRecord");
+                }
             }
         }
         else if (schema is PrimitiveSchema primitiveSchema)
         {
             Console.WriteLine($"{indent}Tipo Primitivo: {primitiveSchema.Fullname}");
         }
-        else
+        else if (schema is ArraySchema arraySchema)
         {
-            Console.WriteLine($"{indent}Tipo desconhecido: {schema.GetType().Name}");
+            Console.WriteLine($"{indent}Lista (Array): Tipo dos itens: {arraySchema.ItemSchema.Fullname}");
+        }
+        else if (schema is UnionSchema unionSchema)
+        {
+            Console.WriteLine($"{indent}Union (UnionSchema):");
+            foreach (var subSchema in unionSchema.Schemas)
+            {
+                TraverseSchema(subSchema, dadosFakes, indentLevel + 2);
+            }
         }
     }
 }
+
 
     
 
