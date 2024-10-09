@@ -33,9 +33,15 @@ namespace SeuProjeto
             // Construir o ServiceProvider
             var serviceProvider = services.BuildServiceProvider();
 
+
+            //var eee = new AvroFakeDataGenerator();
+
+            var dff3 = new SchemaValidator();
+            dff3.ValidateSchema();
+
             // Resolve e executa o serviço
-            var conectorLambda = serviceProvider.GetService<IConectorLambda>();
-            var result = conectorLambda.Validar("", typeof(Root)).Result;
+            //var conectorLambda = serviceProvider.GetService<IConectorLambda>();
+            //var result = conectorLambda.Validar("", typeof(Root)).Result;
 
             // Aguarde uma tecla para fechar 
             Console.ReadKey();
