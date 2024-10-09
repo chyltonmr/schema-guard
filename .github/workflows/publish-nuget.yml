@@ -24,13 +24,13 @@ jobs:
       run: ls -R
 
     - name: Restore dependencies
-      run: dotnet restore schema-guard/schema-guard/schema-guard/schema-guard.csproj
+      run: dotnet restore schema-guard/schema-guard/schema-guard.csproj
 
     - name: Build the project
-      run: dotnet build schema-guard/schema-guard/schema-guard/schema-guard.csproj --configuration Release --no-restore
+      run: dotnet build schema-guard/schema-guard/schema-guard.csproj --configuration Release --no-restore
 
     - name: Pack the project
-      run: dotnet pack schema-guard/schema-guard/schema-guard/schema-guard.csproj --configuration Release --no-build --output ./nupkg
+      run: dotnet pack schema-guard/schema-guard/schema-guard.csproj --configuration Release --no-build --output ./nupkg
 
     - name: Publish to NuGet
       run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
