@@ -8,28 +8,43 @@ using System.Linq;
 public class SchemaValidator
 {
     private readonly string _expectedSchemaJson = @"{
-        ""type"": ""record"",
-        ""name"": ""Customer"",
-        ""namespace"": ""com.example"",
-        ""fields"": [
-            {""name"": ""id"", ""type"": ""string""},
-            {""name"": ""name"", ""type"": ""string""},
-            {""name"": ""email"", ""type"": ""string""},
-            {""name"": ""age"", ""type"": [""null"", ""int""], ""default"": null},
-            {
-                ""name"": ""conta_corrente"",
-                ""type"": {
+    ""type"": ""record"",
+    ""name"": ""Customer"",
+    ""namespace"": ""com.example"",
+    ""fields"": [
+        { ""name"": ""id"", ""type"": ""string"" },
+        //{ ""name"": ""name"", ""type"": ""string"" },
+        //{ ""name"": ""email"", ""type"": ""string"" },
+        //{ ""name"": ""age"", ""type"": [""null"", ""int""], ""default"": null },
+        //{ 
+        //    ""name"": ""conta_corrente"",
+        //    ""type"": {
+        //        ""type"": ""record"",
+        //        ""name"": ""ContaCorrente"",
+        //        ""fields"": [
+        //            { ""name"": ""banco"", ""type"": ""string"" },
+        //            { ""name"": ""agencia"", ""type"": ""string"" },
+        //            { ""name"": ""numero_conta"", ""type"": ""string"" }
+        //        ]
+        //    }
+        //},
+        {
+            ""name"": ""compras"",
+            ""type"": {
+                ""type"": ""array"",
+                ""items"": {
                     ""type"": ""record"",
-                    ""name"": ""ContaCorrente"",
+                    ""name"": ""Compra"",
                     ""fields"": [
-                        {""name"": ""banco"", ""type"": ""string""},
-                        {""name"": ""agencia"", ""type"": ""string""},
-                        {""name"": ""numero_conta"", ""type"": ""string""}
+                        { ""name"": ""produto"", ""type"": ""string"" },
+                        { ""name"": ""quantidade"", ""type"": ""int"" },
+                        { ""name"": ""preco"", ""type"": ""float"" }
                     ]
                 }
             }
-        ]
-    }";
+        }
+    ]
+}";
 
     public void ValidateSchema()
     {
