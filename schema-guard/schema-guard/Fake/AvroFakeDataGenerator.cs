@@ -12,7 +12,7 @@ public class AvroFakeDataGenerator
     {
         // Definir o schema Avro (JSON Schema)
         schemaJson = @"
-        {
+       {
     ""type"": ""record"",
     ""name"": ""Customer"",
     ""namespace"": ""com.example"",
@@ -105,25 +105,25 @@ public class AvroFakeDataGenerator
 
 
         // Exibir os dados fake
-        Console.WriteLine($"ID: {record["id"]}");
-        Console.WriteLine($"Nome: {record["name"]}");
-        Console.WriteLine($"Email: {record["email"]}");
-        Console.WriteLine($"Idade: {record["age"]}");
+        //Console.WriteLine($"ID: {record["id"]}");
+        //Console.WriteLine($"Nome: {record["name"]}");
+        //Console.WriteLine($"Email: {record["email"]}");
+        //Console.WriteLine($"Idade: {record["age"]}");
 
         var respContaCorrente = record["conta_corrente"] as GenericRecord;
         if (respContaCorrente != null)
         {
-            Console.WriteLine($"Banco: {respContaCorrente["banco"]}");
-            Console.WriteLine($"Agência: {respContaCorrente["agencia"]}");
-            Console.WriteLine($"Número da Conta: {respContaCorrente["numero_conta"]}");
+            //Console.WriteLine($"Banco: {respContaCorrente["banco"]}");
+            //Console.WriteLine($"Agência: {respContaCorrente["agencia"]}");
+            //Console.WriteLine($"Número da Conta: {respContaCorrente["numero_conta"]}");
         }
 
         var respcompras = record["compras"] as GenericRecord;
         if (respcompras != null)
         {
-            Console.WriteLine($"Banco: {respcompras["produto"]}");
-            Console.WriteLine($"Agência: {respcompras["quantidade"]}");
-            Console.WriteLine($"Número da Conta: {respcompras["preco"]}");
+            //Console.WriteLine($"Banco: {respcompras["produto"]}");
+            //Console.WriteLine($"Agência: {respcompras["quantidade"]}");
+            //Console.WriteLine($"Número da Conta: {respcompras["preco"]}");
         }
 
         return record;

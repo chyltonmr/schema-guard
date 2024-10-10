@@ -13,21 +13,21 @@ public class SchemaValidator
     ""namespace"": ""com.example"",
     ""fields"": [
         { ""name"": ""id"", ""type"": ""string"" },
-        //{ ""name"": ""name"", ""type"": ""string"" },
-        //{ ""name"": ""email"", ""type"": ""string"" },
-        //{ ""name"": ""age"", ""type"": [""null"", ""int""], ""default"": null },
-        //{ 
-        //    ""name"": ""conta_corrente"",
-        //    ""type"": {
-        //        ""type"": ""record"",
-        //        ""name"": ""ContaCorrente"",
-        //        ""fields"": [
-        //            { ""name"": ""banco"", ""type"": ""string"" },
-        //            { ""name"": ""agencia"", ""type"": ""string"" },
-        //            { ""name"": ""numero_conta"", ""type"": ""string"" }
-        //        ]
-        //    }
-        //},
+        { ""name"": ""name"", ""type"": ""string"" },
+        { ""name"": ""email"", ""type"": ""string"" },
+        { ""name"": ""age"", ""type"": [""null"", ""int""], ""default"": null },
+        { 
+            ""name"": ""conta_corrente"",
+            ""type"": {
+                ""type"": ""record"",
+                ""name"": ""ContaCorrente"",
+                ""fields"": [
+                    { ""name"": ""banco"", ""type"": ""string"" },
+                    { ""name"": ""agencia"", ""type"": ""string"" },
+                    { ""name"": ""numero_conta"", ""type"": ""string"" }
+                ]
+            }
+        },
         {
             ""name"": ""compras"",
             ""type"": {
@@ -100,38 +100,58 @@ public class SchemaValidator
                     {
                         var items = fieldValue as IEnumerable<object>;
                         Console.WriteLine($"{indent}    Lista encontrada com {items?.ToString() ?? "0"} itens");
-                        foreach (var item in items)
+
+                        // Percorrer cada item da lista
+                        if (items != null)
                         {
-                            // Validar o tipo dos itens da lista
-                            Console.WriteLine($"{indent}    Item: {item}");
+                            int itemIndex = 0;
+                            foreach (var item in items)
+                            {
+                                Console.WriteLine($"{indent}    Item {itemIndex++}:");
+                                if (item is GenericRecord itemRecord)
+                                {
+                                    // Se o item for um objeto, percorre suas propriedades
+                                    TraverseSchema(arraySchema.ItemSchema, itemRecord, indentLevel + 2);
+                                }
+                                else
+                                {
+                                    // Caso seja um tipo primitivo, imprime diretamente
+                                    Console.WriteLine($"{indent}      {item}");
+                                }
+                            }
                         }
                     }
+                    else if (fieldEsperados.Schema is PrimitiveSchema primitiveSchema)
+                    {
+                        Console.WriteLine($"{indent}Tipo Primitivo: {fieldEsperados.Schema.Fullname}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{indent}  [ERRO ->] Campo não encontrado tipo!");
+                    }
                 }
-                else
+
+                else if (schemaEsperado is PrimitiveSchema primitiveSchema)
                 {
-                    Console.WriteLine($"{indent}    Campo não encontrado no GenericRecord");
+                    Console.WriteLine($"{indent}Tipo Primitivo: {primitiveSchema.Fullname}");
                 }
-            }
-        }
-        else if (schemaEsperado is PrimitiveSchema primitiveSchema)
-        {
-            Console.WriteLine($"{indent}Tipo Primitivo: {primitiveSchema.Fullname}");
-        }
-        else if (schemaEsperado is ArraySchema arraySchema)
-        {
-            Console.WriteLine($"{indent}Lista (Array): Tipo dos itens: {arraySchema.ItemSchema.Fullname}");
-        }
-        else if (schemaEsperado is UnionSchema unionSchema)
-        {
-            Console.WriteLine($"{indent}Union (UnionSchema):");
-            foreach (var subSchema in unionSchema.Schemas)
-            {
-                TraverseSchema(subSchema, dadosFakes, indentLevel + 2);
+                else if (schemaEsperado is ArraySchema arraySchema)
+                {
+                    Console.WriteLine($"{indent}Lista (Array): Tipo dos itens: {arraySchema.ItemSchema.Fullname}");
+                }
+                else if (schemaEsperado is UnionSchema unionSchema)
+                {
+                    Console.WriteLine($"{indent}Union (UnionSchema):");
+                    foreach (var subSchema in unionSchema.Schemas)
+                    {
+                        TraverseSchema(subSchema, dadosFakes, indentLevel + 2);
+                    }
+                }
             }
         }
     }
 }
 
 
-    
+
 
